@@ -19,6 +19,7 @@ public class CustomerController {
     @PostMapping("/Customer")
     public Customer create(@RequestBody Customer customer){
         return this.customerRepository.save(customer);
+        //return new Customer("John","Smith");
     }
 
     @GetMapping("/Customer")
@@ -27,14 +28,15 @@ public class CustomerController {
     }
 
     @GetMapping("/Customer/{id}")
-    public Customer getCustomerById(@PathVariable Long id){
-        return this.customerRepository.findById(id).get();
+    public Optional<Customer> getCustomerById(@PathVariable Long id){
+        return this.customerRepository.findById(id);
     }
 
     @DeleteMapping("Customer/{id}")
-    public String deleteCustomerById(@PathVariable Long id){
+    public Optional<Customer> deleteCustomerById(@PathVariable Long id){
+        //this.customerRepository.deleteById(id);
         this.customerRepository.deleteById(id);
-        return "That customer has been deleted " + id;
+        return this.customerRepository.findById(id);
     }
 
     @PutMapping("Customer/{id}")
